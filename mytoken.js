@@ -4,7 +4,7 @@ const MyToken = artifacts.require("MyToken");
 
 let frac = new BN(10);
 
-module.exports = async function(callback) {
+module.exports = async function (callback) {
 
     // Get the deployed instance of our token contract
     let instance = await MyToken.deployed();
@@ -33,16 +33,17 @@ module.exports = async function(callback) {
     }
 
     // Show account balances
+    console.log("Before transferring:");
     await printBalance(accounts[0], instance);
     await printBalance(accounts[1], instance);
 
     // Send a transaction to transfer 15 tokens from account 0 to account 1
 
-    let amount = frac.multiply(new BN(15));
-    let response = await instance.transfer(accounts[1], amount);
+    let amount = frac.mul(new BN(15));
+    let response = await instance.transfer(accounts[1], amount, {from: accounts[0]});
 
     console.log("Transaction hash: " + response.tx);
-
+    console.log("After transferring:");
     await printBalance(accounts[0], instance);
     await printBalance(accounts[1], instance);
 
