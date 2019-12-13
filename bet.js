@@ -16,6 +16,8 @@ module.exports = async function (callback) {
             return;
         }
 
+        console.log("Initial balances: ");
+
         await printBalance(accounts[0], instance);
         await printBalance(accounts[1], instance);
 
@@ -25,6 +27,8 @@ module.exports = async function (callback) {
         let response = await instance.addBalance(amount, {from: accounts[0]});
 
         console.log("Transaction hash: " + response.tx);
+
+        console.log("Balances after addBalance: ");
 
         await printBalance(accounts[0], instance);
         await printBalance(accounts[1], instance);
@@ -36,6 +40,8 @@ module.exports = async function (callback) {
 
         console.log("Transaction hash: " + response.tx);
 
+        console.log("Balances after initBet: ");
+
         await printBalance(accounts[0], instance);
         await printBalance(accounts[1], instance);
 
@@ -45,6 +51,8 @@ module.exports = async function (callback) {
         response = await instance.submitResult(result, {from: accounts[1]});
 
         console.log("Transaction hash: " + response.tx);
+
+        console.log("Balances after submitResult: ");
 
         await printBalance(accounts[0], instance);
         await printBalance(accounts[1], instance);
