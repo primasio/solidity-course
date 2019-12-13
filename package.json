@@ -7,7 +7,8 @@
     "test": "test"
   },
   "dependencies": {
-    "bn.js": "^5.0.0"
+    "bn.js": "^5.0.0",
+    "openzeppelin-solidity": "^2.4.0"
   },
   "devDependencies": {},
   "scripts": {

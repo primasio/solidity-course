@@ -29,28 +29,4 @@ contract MyToken is ERC20 {
         return version;
     }
 
-    function initBet(uint256 amount) public returns (bool) {
-        balances[msg.sender].sub(amount, "ERC20: transfer amount exceeds balance");
-        lockedAmount = amount;
-        return true;
-    }
-
-    function submitResult(int r) public returns (bool) {
-
-        if (lockedAmount == 0)
-            return false;
-
-        if (r == 1 + 1) {
-            balances[msg.sender].add(lockedAmount);
-            return true;
-        }else {
-            return false;
-        }
-
-
-        submitResult(2);
-    }
-
-
-
 }
