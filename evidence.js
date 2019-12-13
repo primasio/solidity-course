@@ -5,15 +5,18 @@ module.exports = async function (callback) {
         const Evidence = artifacts.require("Evidence");
         let instance = await Evidence.deployed();
 
-        let existed = await instance.exists('0x0000000000000000000000000000000000000000000000000000000000000001');
+        let content = "Hello World!";
+        let contentHash = web3.utils.sha3(content, {encoding: "hex"});
+
+        let existed = await instance.exists(contentHash);
         console.log('existed: ', existed);
 
-        let result = await instance.save('0x0000000000000000000000000000000000000000000000000000000000000001', {from: accounts[0]});
+        let result = await instance.save(contentHash, {from: accounts[0]});
         console.log('transaction hash: ', result.tx);      //(string) - Transaction hash
         console.log('logs: ', result.logs);    //(array) - Decoded events (logs)
         console.log('receipt: ', result.receipt); //(object) - Transaction receipt (includes the amount of gas used)
 
-        existed = await instance.exists('0x0000000000000000000000000000000000000000000000000000000000000001');
+        existed = await instance.exists(contentHash);
         console.log('existed: ', existed);
 
         callback()
