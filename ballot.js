@@ -15,9 +15,20 @@ module.exports = async function (callback) {
         await printProposal(1, instance);
         await printProposal(2, instance);
 
-        await instance.giveRightToVote(accounts[1], {from: accounts[0]});
+        await instance.giveRightToVote(accounts[1]);
+        await instance.giveRightToVote(accounts[2]);
+
         await printVoter(accounts[0], instance);
-    } catch(e){
+        await printVoter(accounts[1], instance);
+        await printVoter(accounts[2], instance);
+
+        await instance.vote(0, {from: accounts[0]});
+        await instance.delegate(accounts[2], {from: accounts[1]});
+        await instance.vote(1, {from: accounts[2]});
+
+        let winnerName = await instance.winnerName();
+        console.log('winnerName', web3.utils.toAscii(winnerName));
+    } catch (e) {
         console.log(e)
     }
     callback()
@@ -31,9 +42,11 @@ async function printProposal(index, instance) {
 
 async function printVoter(addr, instance) {
     let voter = await instance.voters(addr);
-    console.log(voter)
-    // console.log("voter: " + addr + " weight: ", voter.weight.toString());
-    // console.log("voter: " + addr + " voted: ", voter.voted);
-    // console.log("voter: " + addr + " voted: ", voter.delegate.toString());
-    // console.log("voter: " + addr + " voted: ", voter.vote.toString());
+    console.log("---------------------------------------------------------------");
+    console.log("voter addr: " + addr);
+    console.log("voter: " + "weight: ", voter.weight.toString());
+    console.log("voter: " + "voted: ", voter.voted);
+    console.log("voter: " + "delegate: ", voter.delegate.toString());
+    console.log("voter: " + "vote: ", voter.vote.toString());
+    console.log("---------------------------------------------------------------");
 }
