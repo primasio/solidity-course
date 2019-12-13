@@ -1,2 +1,5 @@
-module.exports = function (deployer) {
+const Evidence = artifacts.require("Evidence");
+
+module.exports = function(deployer) {
+    deployer.deploy(Evidence);
 };
