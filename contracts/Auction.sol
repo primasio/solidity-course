@@ -121,7 +121,7 @@ contract Auction {
         // 1. Conditions
         require(now >= auctionEndTime, "Auction not yet ended.");
         require(!ended, "auctionEnd has already been called.");
-        require(nftokenContract.getApproved(nftokenId) == address(this));
+        require(nftokenContract.getApproved(nftokenId) == address(this), "The token in action has not been approved.");
 
         // 2. Effects
         nftokenContract.safeTransferFrom(beneficiary, highestBidder, nftokenId);
