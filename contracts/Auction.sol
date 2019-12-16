@@ -13,7 +13,7 @@ contract Auction {
     uint public highestBid;
     uint public nftokenId;
 
-    // 为完成的退款记录
+    // 未完成的退款请求
     mapping(address => uint) pendingReturns;
 
     // 竞拍结束后设置为true，不允许任何后续修改
@@ -72,12 +72,7 @@ contract Auction {
         if (amount > 0) {
             // 必须在发送前清空退款记录
             pendingReturns[msg.sender] = 0;
-
-            if (!msg.sender.send(amount)) {
-                // 如果发送失败，就恢复退款记录
-                pendingReturns[msg.sender] = amount;
-                return false;
-            }
+            msg.sender.transfer(amount);
         }
         return true;
     }

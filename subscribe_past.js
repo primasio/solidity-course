@@ -7,9 +7,13 @@ module.exports = async function (callback) {
         const MyToken = artifacts.require("MyToken");
         let instance = await MyToken.deployed();
 
-        let events = await instance.getPastEvents('Transfer', {fromBlock: 0, toBlock: 'latest'}, function (error) {
-            console.log('error', error);
-        });
+        let events = await instance.getPastEvents('Transfer', {
+                fromBlock: 0,
+                toBlock: 'latest'
+            },
+            function (error) {
+                console.log('error', error);
+            });
         for (let i = 0; i < events.length; i++) {
             let event = events[i];
             console.log('-----------------------------------------------');
@@ -18,7 +22,6 @@ module.exports = async function (callback) {
             console.log('to', event.args.to);
             console.log('value', event.args.value.div(frac).toString());
         }
-
         callback()
     } catch (e) {
         callback(e)
